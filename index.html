@@ -1,0 +1,110 @@
+<!DOCTYPE html>
+<html lang="en">
+	<head>
+		<meta charset="UTF-8" />
+		<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+		<title>Document</title>
+		<link rel="stylesheet" href="./styles.css" />
+	</head>
+	<body>
+		<div class="card"></div>
+		<button id="load-more">load more</button>
+		<script>
+			function multiLoad(num) {
+				for (let i = 0; i < num; i++) {
+					load();
+				}
+			}
+
+			multiLoad(3);
+
+			const button = document.getElementById("load-more");
+			button.addEventListener("click", load);
+
+			function load() {
+				fetch("https://www.thecocktaildb.com/api/json/v1/1/random.php")
+					.then((res) => {
+						return res.json();
+					})
+					.then((drinkRes) => {
+						const drink = drinkRes.drinks[0];
+
+						// if (drink.strIngredient15 === null) {
+						// 	load();
+						// }
+
+						const card = document.querySelector(".card");
+
+						if (card.innerHTML !== "") {
+							const line = document.createElement("hr");
+							card.append(line);
+						}
+
+						const name = document.createElement("h1");
+						name.textContent = drink.strDrink;
+
+						const title = document.createElement("h3");
+						title.textContent = `${drink.strAlcoholic} ${drink.strCategory} served in ${drink.strGlass}`;
+
+						const img = document.createElement("img");
+						img.src = drink.strDrinkThumb;
+
+						const instr = document.createElement("p");
+						instr.textContent = drink.strInstructions;
+
+						let measures = [
+							drink.strMeasure1,
+							drink.strMeasure2,
+							drink.strMeasure3,
+							drink.strMeasure4,
+							drink.strMeasure5,
+							drink.strMeasure6,
+							drink.strMeasure7,
+							drink.strMeasure8,
+							drink.strMeasure9,
+							drink.strMeasure10,
+							drink.strMeasure11,
+							drink.strMeasure12,
+							drink.strMeasure13,
+							drink.strMeasure14,
+							drink.strMeasure15,
+						];
+						measures = measures.filter((item) => item != null);
+
+						let ingredients = [
+							drink.strIngredient1,
+							drink.strIngredient2,
+							drink.strIngredient3,
+							drink.strIngredient4,
+							drink.strIngredient5,
+							drink.strIngredient6,
+							drink.strIngredient7,
+							drink.strIngredient8,
+							drink.strIngredient9,
+							drink.strIngredient10,
+							drink.strIngredient11,
+							drink.strIngredient13,
+							drink.strIngredient14,
+							drink.strIngredient15,
+						];
+						ingredients = ingredients.filter((item) => item != null);
+
+						const ingredientList = document.createElement("ul");
+						ingredientList.textContent = "ingredients: ";
+
+						for (let i = 0; i < ingredients.length; i++) {
+							const listItem = document.createElement("li");
+							// kartais matmenu buna maziau nei ingredientu todel reikia istaiysti
+							const m = measures[i] === undefined ? "" : measures[i];
+							listItem.textContent = m + " " + ingredients[i];
+
+							ingredientList.append(listItem);
+						}
+						// console.log(ingredients);
+
+						card.append(name, img, title, ingredientList, instr);
+					});
+			}
+		</script>
+	</body>
+</html>

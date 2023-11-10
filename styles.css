@@ -1,0 +1,36 @@
+body {
+	margin: 0;
+	font-family: cursive;
+	display: flex;
+	flex-direction: column;
+	align-items: center;
+}
+.card {
+	background-color: beige;
+	width: 50%;
+	min-width: 400px;
+	max-width: 800px;
+	margin: 2rem auto;
+	padding: 2rem;
+	box-sizing: border-box;
+	border-radius: 1rem;
+	& img {
+		width: 100%;
+		border-radius: 1rem;
+		aspect-ratio: 1;
+		object-fit: cover;
+	}
+	& h1 {
+		text-align: center;
+	}
+}
+button {
+	all: unset;
+	background-color: beige;
+	padding: 1rem;
+	margin-bottom: 3rem;
+	border-radius: 1000px;
+}
+button:hover {
+	background-color: aqua;
+}

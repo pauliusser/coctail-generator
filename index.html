@@ -9,6 +9,8 @@
 	<body>
 		<div class="card"></div>
 		<script>
+			let cardsNumber = 0;
+
 			function multiLoad(num) {
 				for (let i = 0; i < num; i++) {
 					load();
@@ -112,6 +114,10 @@
 						}
 
 						card.append(name, img, title, ingredientList, instr);
+						cardsNumber++;
+					})
+					.catch((err) => {
+						console.log("number of coctails loaded: " + cardsNumber);
 					});
 			}
 		</script>

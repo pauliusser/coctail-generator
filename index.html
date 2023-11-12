@@ -8,7 +8,6 @@
 	</head>
 	<body>
 		<div class="card"></div>
-		<button id="load-more">load more</button>
 		<script>
 			function multiLoad(num) {
 				for (let i = 0; i < num; i++) {
@@ -18,8 +17,12 @@
 
 			multiLoad(3);
 
-			const button = document.getElementById("load-more");
-			button.addEventListener("click", load);
+			window.onscroll = function () {
+				if (window.innerHeight + window.scrollY >= document.body.offsetHeight) {
+					// puslapiui pasiekus apacia pasiledzia sita funkcija
+					load();
+				}
+			};
 
 			function load() {
 				fetch("https://www.thecocktaildb.com/api/json/v1/1/random.php")
@@ -40,18 +43,23 @@
 							card.append(line);
 						}
 
+						// gerimo pavadinimas
 						const name = document.createElement("h1");
 						name.textContent = drink.strDrink;
 
-						const title = document.createElement("h3");
-						title.textContent = `${drink.strAlcoholic} ${drink.strCategory} served in ${drink.strGlass}`;
-
+						// gerimo paveikslelis
 						const img = document.createElement("img");
 						img.src = drink.strDrinkThumb;
 
+						// gerimo antraste
+						const title = document.createElement("h3");
+						title.textContent = `${drink.strAlcoholic} ${drink.strCategory} served in ${drink.strGlass}`;
+
+						// paruosimo instrukcijos
 						const instr = document.createElement("p");
 						instr.textContent = drink.strInstructions;
 
+						// ingredientu kiekis
 						let measures = [
 							drink.strMeasure1,
 							drink.strMeasure2,
@@ -71,6 +79,7 @@
 						];
 						measures = measures.filter((item) => item != null);
 
+						// ingredientu pavadinimas
 						let ingredients = [
 							drink.strIngredient1,
 							drink.strIngredient2,
@@ -89,6 +98,7 @@
 						];
 						ingredients = ingredients.filter((item) => item != null);
 
+						// ingredientu sarasas
 						const ingredientList = document.createElement("ul");
 						ingredientList.textContent = "ingredients: ";
 
@@ -100,7 +110,6 @@
 
 							ingredientList.append(listItem);
 						}
-						// console.log(ingredients);
 
 						card.append(name, img, title, ingredientList, instr);
 					});

@@ -24,13 +24,11 @@ body {
 		text-align: center;
 	}
 }
-button {
-	all: unset;
-	background-color: beige;
-	padding: 1rem;
-	margin-bottom: 3rem;
-	border-radius: 1000px;
-}
-button:hover {
-	background-color: aqua;
+/* On screens that are 600px or less, set the background color to olive */
+@media screen and (max-width: 600px) {
+	.card {
+		width: 100%;
+		margin: 0;
+		border-radius: 0;
+	}
 }
